@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { HomePage, Search } from './components';
 
 function App() {
   return (
-    <>
-      <h1>
-        Let's get your meal of the day
-      </h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' Component={HomePage} />
+        <Route path='/search' Component={Search} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
