@@ -1,0 +1,4 @@
+Frontend:
+1. Creating a side bar:
+    - I learned how to use aside tag in html
+    - Incorporated online tutorials and used tailwindcss
