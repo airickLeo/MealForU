@@ -5,8 +5,8 @@ const HomePage = () => {
     return (
         <div className="h-screen flex">
             <Sidebar />
-            <div className="flex flex-col justify-center h-full gap-8 mr-16
-            items-center text-center float-none ml-[150px] max-w-[1200px]">
+            <div className="flex flex-col justify-center h-full gap-8
+            items-center text-center float-none max-w-[1200px] mx-[13%]">
                 <h1>
                     Welcome to Meal For U, a fullstack application that helps you
                     to find the perfect recipe for your diet!

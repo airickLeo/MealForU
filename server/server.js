@@ -5,8 +5,8 @@ const app = express();
 app.use(cors());
 const port = 8000;
 
-app.get("/", (req, res) => {
-    res.json({ 'users': ['eric'] })
+app.get("/search", (req, res) => {
+    
 })
 
 app.listen(port, () => {
