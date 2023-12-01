@@ -2,3 +2,5 @@ Frontend:
 1. Creating a side bar:
     - I learned how to use aside tag in html
     - Incorporated online tutorials and used tailwindcss
+2. Making sure that all pages of the SPA are centered, including the sidebar and the actual 
+page content. Used HOC to make sure the stylings are aligned between all components (centered)

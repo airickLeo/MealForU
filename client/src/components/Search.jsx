@@ -1,12 +1,12 @@
+import { ComponentWrapper } from "../hoc"
+
 const Search = () => {
 
     return (
-        <>
-            <div>
-                Let's find a meal for you
-            </div>
-        </>
+        <div className="w-full flex flex-col">
+            Let's find a meal for you!
+        </div>
     )
 }
 
-export default Search
+export default ComponentWrapper(Search);

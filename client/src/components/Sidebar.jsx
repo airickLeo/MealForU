@@ -13,12 +13,12 @@ const Sidebar = () => {
     return (
         <>
             {menuOpen && (
-                <aside className="h-full max-w-[30%] min-w-[150px]">
+                <aside className="h-full max-w-[30%] min-w-[190px]">
                     <nav className="w-full h-full bg-white border-r shadow-lg flex flex-col
             pl-[6%] pt-[6%]">
                         <div className="flex items-center justify-between p-[8%] gap-[20%] mt-[50px]">
                             <p> Menu </p>
-                            <button className="p-[3%] rounded-lg bg-gray-100 hover:bg-gray-200 max-w-[85px]" 
+                            <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 max-w-[70px]" 
                                 onClick={closeMenu}>
                                 <img src={closeMenuIcon} alt="closeMenu" />
                             </button>
@@ -40,7 +40,7 @@ const Sidebar = () => {
             )}
             {!menuOpen && (
                 <button onClick={setMenu}
-                    className="rounded-full max-w-[85px] h-[85px] mt-[50px]">
+                    className="rounded-full max-w-[70px] h-[70px] mt-[50px]">
                     <img src={openMenu} alt="openMenu" className="2" />
                 </button>
             )}
