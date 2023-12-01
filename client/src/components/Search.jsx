@@ -1,6 +1,7 @@
 import { ComponentWrapper } from "../hoc";
 import { searchFilters } from "../constants";
 import { useState } from "react";
+import axios from "axios";
 
 const Search = () => {
     // fields to enable user to search for specified categories
@@ -18,9 +19,17 @@ const Search = () => {
     }
 
     // submit query to backend
-    const handleQuery = async (e) => {
+    const handleQuery = (e) => {
         e.preventDefault();
-        
+
+        const fetchData = async () => {
+            const res = await axios.get("http://localhost:8000/search", {
+                params: {
+                    ...query
+                }
+            });
+        }
+        fetchData();
     }
 
     return (

@@ -9,3 +9,4 @@ Backend:
 1. In the search page, we limit the number of API calls by only fetching data from an API
 when the user clicks search after inputting into fields of filters. We did not 
 want to excessively call the public API as we are limited the number of uses.
+2. Validations of user inputs in the backend
