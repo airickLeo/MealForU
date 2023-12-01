@@ -4,7 +4,7 @@ import { ComponentWrapper } from "../hoc"
 
 const HomePage = () => {
     return (
-        <div className="flex flex-col text-center gap-8">
+        <div className="flex flex-col text-center gap-8 h-full justify-center">
             <h1>
                 Welcome to Meal For U, a fullstack application that helps you
                 to find the perfect recipe for your diet!

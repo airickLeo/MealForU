@@ -7,7 +7,7 @@ const ComponentWrapper = (OriginalComponent) => {
                 <div className="h-screen flex">
                     <Sidebar />
                     <div className="flex justify-center h-full 
-            items-center  max-w-[1200px] mx-[13%] w-full">
+              max-w-[1200px] mx-[13%] w-full">
                         <OriginalComponent />
                     </div>
                 </div>

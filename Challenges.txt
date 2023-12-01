@@ -4,3 +4,8 @@ Frontend:
     - Incorporated online tutorials and used tailwindcss
 2. Making sure that all pages of the SPA are centered, including the sidebar and the actual 
 page content. Used HOC to make sure the stylings are aligned between all components (centered)
+
+Backend:
+1. In the search page, we limit the number of API calls by only fetching data from an API
+when the user clicks search after inputting into fields of filters. We did not 
+want to excessively call the public API as we are limited the number of uses.
