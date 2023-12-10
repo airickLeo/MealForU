@@ -35,7 +35,6 @@ const obtainRecipes = (rawData) => {
         // obtain all 100 recipes from API query
         for (let i = 0; i < targetCount; i += 1) {
             // obtain the current (i %  pageCount)th recipe on the current page
-            console.log(rawData.hits.length);
             currRecipe = rawData.hits[i % pageCount].recipe;
 
             // obj that stores the desired data to be delivered to client
@@ -52,10 +51,15 @@ const obtainRecipes = (rawData) => {
 
             if (i % pageCount == 0) {
                 nextPage = rawData["_links"].next.href;
+
+                // no more "nextPage"
+                if (!nextPage) {
+                    break;
+                }
+                console.log(nextPage);
             }
         }
 
-        console.log(result[0]);
         return result;
     } catch (err) {
         console.error(err);
@@ -68,6 +72,7 @@ app.get("/search", async (req, res) => {
         // obtain the query filters
         const queryFilters = req.query;
         let calories = queryFilters.calories || "0+";
+        // for protein, we want more than the queryFilters.protein
         let protein = (queryFilters.protein || "0") + "+";
         let carbs = (queryFilters.carbs || "0+");
 
@@ -75,17 +80,16 @@ app.get("/search", async (req, res) => {
             {
                 params: {
                     ...defautlParam,
-                    calories: encodeURIComponent(calories),
-                    // "nutrients%5BPROCNT%5D": protein + "%2B",
-                    // "nutrients%5BCHOCDF%5D": queryFilters.carbs,
+                    calories: calories,
+                    "nutrients%5BPROCNT%5D": protein,
+                    "nutrients%5BCHOCDF%5D": carbs,
                 }
             })
 
         // obtain number of servings, ingredients, instructions, total carbs, total protein,
         // and total calories for a recipe, and the image, also the link to article is needed
-        // let rawData = response.data;
-        // console.log(rawData);
-        // let recipeList = obtainRecipes(rawData);
+        let rawData = response.data;
+        let recipeList = obtainRecipes(rawData);
 
         // console.log(JSON.stringify(response.data));
     } catch (err) {
