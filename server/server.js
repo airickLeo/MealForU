@@ -8,7 +8,7 @@ const port = 8000;
 
 const apiKey = "3e2d6d1ae92e62b052dd7ca301811846";
 const applicationId = "c238012f";
-const apiUrl = "https://api.edamam.com/api/recipes/v2"
+let apiUrl = "https://api.edamam.com/api/recipes/v2"
 const defautlParam = {
     app_id: applicationId,
     app_key: apiKey,
@@ -22,7 +22,7 @@ const defautlParam = {
 // on the backend to query for protein count. (also validation of negative numbers)
 
 // O(n) query function to obtain all recipes (target 100 recipes)
-const obtainRecipes = (rawData) => {
+const obtainRecipes = async (rawData) => {
     // obtain the next 20 resulting recipes from query (API shows only 20 per page)
 
     let result = []
@@ -32,7 +32,7 @@ const obtainRecipes = (rawData) => {
     let pageCount = rawData.to - rawData.from + 1;
 
     try {
-        // obtain all 100 recipes from API query
+        // target to obtain all 100 recipes from API query
         for (let i = 0; i < targetCount; i += 1) {
             // obtain the current (i %  pageCount)th recipe on the current page
             currRecipe = rawData.hits[i % pageCount].recipe;
@@ -49,14 +49,17 @@ const obtainRecipes = (rawData) => {
 
             result.push(recipeObj);
 
-            if (i % pageCount == 0) {
+            // If this is true, we know we need to obtain the next page of the API
+            if ((i + 1) % pageCount == 0) {
                 nextPage = rawData["_links"].next.href;
 
                 // no more "nextPage"
                 if (!nextPage) {
                     break;
                 }
-                console.log(nextPage);
+
+                const response = await axios.get(nextPage);
+                rawData = response.data;
             }
         }
 
@@ -89,9 +92,10 @@ app.get("/search", async (req, res) => {
         // obtain number of servings, ingredients, instructions, total carbs, total protein,
         // and total calories for a recipe, and the image, also the link to article is needed
         let rawData = response.data;
-        let recipeList = obtainRecipes(rawData);
+        let recipeList = await obtainRecipes(rawData);
+        console.log("Recipes received: ", recipeList.length);
 
-        // console.log(JSON.stringify(response.data));
+        res.json(JSON.stringify(recipeList)).status(200);
     } catch (err) {
         console.error(err);
         res.status(404).json({ message: "Error, could not obtain the recipes desired" });
