@@ -6,6 +6,7 @@ Frontend:
 page content. Used HOC to make sure the stylings are aligned between all components (centered)
 
 ###
+1. Enable pagination
 3. Allow caching, so that when the user refreshes the browser, their past search result
 still exists on the page
 4. Enable advanced filters (more nutrient options) in the form of a dropdown

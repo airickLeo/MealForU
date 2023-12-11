@@ -2,6 +2,8 @@ import { ComponentWrapper } from "../hoc";
 import { searchFilters } from "../constants";
 import { useState } from "react";
 import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
+import Pagination from '@mui/material/Pagination';
 
 const Search = () => {
     // fields to enable user to search for specified categories
@@ -12,6 +14,14 @@ const Search = () => {
     });
 
     const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(false);
+    // Limit number of recipes displayed per page
+    const [itemPerPage, setNumItem] = useState(12);
+    // Set the starting index for recipes with respect to the "recipes" state.
+    // Remember we only render "itemPerPage" number of recipes per page
+    const [startIndex, setStart] = useState(0);
+    const [currPage, setPage] = useState(1);
+    const [currReicpes, setCurrRecipes] = useState([]);
 
     const formChange = (targetValue, targetKey) => {
         setQuery({
@@ -25,7 +35,7 @@ const Search = () => {
     // at this time
     const handleQuery = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         const fetchData = async () => {
             const res = await axios.get("http://localhost:8000/search", {
                 params: {
@@ -34,15 +44,27 @@ const Search = () => {
             });
             return res.data;
         }
-        setRecipes(JSON.parse(await fetchData()));
+        const data = JSON.parse(await fetchData())
+        setRecipes(data);
         console.log("Data received");
+        setLoading(false);
+        // always start loading from 0
+        setCurrRecipes(data.slice(0, itemPerPage));
+    }
+
+    // handles page change of the pagination
+    const handlePageChange = (event, page) => {
+        event.preventDefault();
+        setPage(page);
+        const startIndex = (page - 1) * itemPerPage;
+        setStart(startIndex);
+        setCurrRecipes(recipes.slice(startIndex, page * itemPerPage));
     }
 
     return (
         <div className="w-full flex flex-col mt-12">
             <h2 className="mb-[5%]">
-                Input the amount of calories, protein, and carbs as a limit so we
-                can find the most suiting meal for you!
+                Input the amount of calories, protein (at least), and carbs as a limit per serving so we can find the most suiting meal for you!
             </h2>
             <form className="flex flex-col mb-12" onSubmit={(e) => handleQuery(e)}>
                 <div className="flex flex-wrap justify-between gap-4">
@@ -62,9 +84,15 @@ const Search = () => {
                 </button>
             </form>
 
+            {loading && (
+                <div className="flex justify-center mb-16">
+                    <CircularProgress />
+                </div>
+            )}
+
             {recipes && (
                 <div className="flex justify-evenly flex-wrap gap-6 w-full">
-                    {recipes.map((recipe, index) => (
+                    {currReicpes.map((recipe, index) => (
                         <div className="w-[250px] text-center shadow-sm shadow-slate-400
                         border border-gray-200 p-2 rounded-xl" key={`recipe-${index}`}>
                             <img src={recipe.image}
@@ -79,6 +107,9 @@ const Search = () => {
                     ))}
                 </div>
             )}
+
+            <Pagination count={Math.ceil(recipes.length / itemPerPage)} color="primary"
+                className={`${recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} showFirstButton showLastButton page={currPage} onChange={handlePageChange} />
         </div>
     )
 }
