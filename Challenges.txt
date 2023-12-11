@@ -5,8 +5,17 @@ Frontend:
 2. Making sure that all pages of the SPA are centered, including the sidebar and the actual 
 page content. Used HOC to make sure the stylings are aligned between all components (centered)
 
+###
+3. Allow caching, so that when the user refreshes the browser, their past search result
+still exists on the page
+4. Enable advanced filters (more nutrient options) in the form of a dropdown
+
 Backend:
 1. In the search page, we limit the number of API calls by only fetching data from an API
 when the user clicks search after inputting into fields of filters. We did not 
 want to excessively call the public API as we are limited the number of uses.
 2. Validations of user inputs in the backend
+
+### 
+3. The backend still does not fetch the data properly (returning the same data everytime).
+Fix this.

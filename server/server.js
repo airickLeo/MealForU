@@ -39,12 +39,14 @@ const obtainRecipes = async (rawData) => {
 
             // obj that stores the desired data to be delivered to client
             let recipeObj = {
+                name: currRecipe.label,
                 yield: currRecipe.yield,
                 // image might not work for now
                 image: currRecipe.image,
                 ingredients: [...currRecipe.ingredients],
                 calories: currRecipe.calories,
-                protein: currRecipe.totalNutrients["PROCNT"].quantity
+                protein: currRecipe.totalNutrients["PROCNT"].quantity,
+                carbs: currRecipe.totalNutrients["CHOCDF"].quantity
             }
 
             result.push(recipeObj);

@@ -11,6 +11,8 @@ const Search = () => {
         carbs: ""
     });
 
+    const [recipes, setRecipes] = useState([]);
+
     const formChange = (targetValue, targetKey) => {
         setQuery({
             ...query,
@@ -19,7 +21,9 @@ const Search = () => {
     }
 
     // submit query to backend
-    const handleQuery = (e) => {
+    // We make it async so that the user cannot interact with the browser
+    // at this time
+    const handleQuery = async (e) => {
         e.preventDefault();
 
         const fetchData = async () => {
@@ -28,17 +32,19 @@ const Search = () => {
                     ...query
                 }
             });
+            return res.data;
         }
-        fetchData();
+        setRecipes(JSON.parse(await fetchData()));
+        console.log("Data received");
     }
 
     return (
         <div className="w-full flex flex-col mt-12">
-            <h2 className="mb-[10%]">
+            <h2 className="mb-[5%]">
                 Input the amount of calories, protein, and carbs as a limit so we
                 can find the most suiting meal for you!
             </h2>
-            <form className="flex flex-col" onSubmit={(e) => handleQuery(e)}>
+            <form className="flex flex-col mb-12" onSubmit={(e) => handleQuery(e)}>
                 <div className="flex flex-wrap justify-between gap-4">
                     {searchFilters.map((filter) => (
                         <input type="text" key={`searchFilter-${filter.id}`}
@@ -50,11 +56,29 @@ const Search = () => {
                         />
                     ))}
                 </div>
-                <button type="submit" 
-                className="mt-8 w-32 rounded-3xl border-2 bg-blue-300 border-indigo-100 hover:border-black">
+                <button type="submit"
+                    className="mt-8 w-32 rounded-3xl border-2 bg-blue-300 border-indigo-100 hover:border-black">
                     Find Recipe!
                 </button>
             </form>
+
+            {recipes && (
+                <div className="flex justify-evenly flex-wrap gap-6 w-full">
+                    {recipes.map((recipe, index) => (
+                        <div className="w-[250px] text-center shadow-sm shadow-slate-400
+                        border border-gray-200 p-2 rounded-xl" key={`recipe-${index}`}>
+                            <img src={recipe.image}
+                                alt={`recipe-${index} image`}
+                                className="w-auto height-[100px] mb-4" />
+                            <h3>{recipe.name}</h3>
+                            <p>Total servings: {recipe.yield}</p>
+                            <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
+                            <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
+                            <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
