@@ -4,9 +4,14 @@ Frontend:
     - Incorporated online tutorials and used tailwindcss
 2. Making sure that all pages of the SPA are centered, including the sidebar and the actual 
 page content. Used HOC to make sure the stylings are aligned between all components (centered)
+3. Enable pagination
+4. add back to top functionality and automatically return to top when changing pages in pagination
+5.
 
 ###
-1. Enable pagination
+
+4. allow users to click on each card to get more info (like nutrition facts, ingredients,
+steps to cook)
 3. Allow caching, so that when the user refreshes the browser, their past search result
 still exists on the page
 4. Enable advanced filters (more nutrient options) in the form of a dropdown
@@ -24,3 +29,4 @@ and call the API directly with this.
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
 Fixed logic in the O(n) function.
 ### 
+5. Verify search logic (carbs for the returned result is inaccurate)
