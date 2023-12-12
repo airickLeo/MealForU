@@ -15,8 +15,11 @@ Backend:
 1. In the search page, we limit the number of API calls by only fetching data from an API
 when the user clicks search after inputting into fields of filters. We did not 
 want to excessively call the public API as we are limited the number of uses.
-2. Validations of user inputs in the backend
-
-### 
+2. Validations of user inputs in the backend (base value of 0+)
 3. The backend still does not fetch the data properly (returning the same data everytime).
-Fix this.
+Fix: originally axios double encoded my request parameter (the percentage sign). So instead 
+of using the axios "params" attribute, I created the entire API url using "new URLsearchParams"
+and call the API directly with this.
+4. The api might not return all 100 results each time (based on the query), as some 
+returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
+### 
