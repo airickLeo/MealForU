@@ -50,6 +50,8 @@ const Search = () => {
         setLoading(false);
         // always start loading from 0
         setCurrRecipes(data.slice(0, itemPerPage));
+        // return to page 1
+        setPage(1);
     }
 
     // handles page change of the pagination

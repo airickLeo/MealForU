@@ -22,4 +22,5 @@ of using the axios "params" attribute, I created the entire API url using "new U
 and call the API directly with this.
 4. The api might not return all 100 results each time (based on the query), as some 
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
+Fixed logic in the O(n) function.
 ### 

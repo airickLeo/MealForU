@@ -21,16 +21,22 @@ const defautlParam = {
 // protein count should allow users to enter range or number+ on the frontend. We can process this 
 // on the backend to query for protein count. (also validation of negative numbers)
 
-// O(n) query function to obtain all recipes (target 100 recipes)
+// O(n) query function to obtain all recipes (target 100 recipes), where n is the
+// number of receipes returned from the API
 const obtainRecipes = async (rawData) => {
     // obtain the next 20 resulting recipes from query (API shows only 20 per page)
     let result = []
     let nextPage = "";
     let currRecipe = {};
     let pageCount = rawData.to - rawData.from + 1;
-    const targetCount = 100 > rawData.to ? rawData.to : 100;
+    let targetCount = 100;
 
     try {
+        // nothing found for the current search filter
+        if (!rawData || rawData.hits == 0) {
+            return result;
+        }
+
         // target to obtain all 100 recipes from API query
         for (let i = 0; i < targetCount; i += 1) {
             // obtain the current (i %  pageCount)th recipe on the current page
