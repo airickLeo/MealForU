@@ -40,8 +40,9 @@ const Sidebar = () => {
             )}
             {!menuOpen && (
                 <button onClick={setMenu}
-                    className="rounded-full max-w-[70px] h-[70px] mt-[50px] sticky top-[50px]">
-                    <img src={openMenu} alt="openMenu" className="2" />
+                    className="rounded-full max-w-[70px] h-[70px] mt-[50px] sticky top-[50px]
+                    border border-blue-700">
+                    <img src={openMenu} alt="openMenu" />
                 </button>
             )}
         </>

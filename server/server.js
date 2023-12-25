@@ -51,9 +51,12 @@ const obtainRecipes = async (rawData) => {
                 ingredients: [...currRecipe.ingredients],
                 calories: currRecipe.calories,
                 protein: currRecipe.totalNutrients["PROCNT"].quantity,
-                carbs: currRecipe.totalNutrients["CHOCDF"].quantity
+                carbs: currRecipe.totalNutrients["CHOCDF"].quantity,
+                instructions: currRecipe.instructions,
+                ingredients: currRecipe.ingredients
             }
             result.push(recipeObj);
+            console.log(recipeObj.instructions);
 
             // If this is true, we know we need to obtain the next page of the API
             if ((i + 1) % pageCount == 0) {
@@ -67,6 +70,7 @@ const obtainRecipes = async (rawData) => {
                 rawData = response.data;
             }
         }
+        console.log(result[0].instructions);
         return result;
     } catch (err) {
         console.error(err);

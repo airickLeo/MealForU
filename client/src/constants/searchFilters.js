@@ -2,17 +2,17 @@
 const searchFilters = [
     {
         id: "calories",
-        name: "calories",
+        name: "total calories (kcal)",
         unit: "kcal"
     },
     {
         id: "protein",
-        name: "protein",
+        name: "minimum protein count (g)",
         unit: "grams (g)"
     },
     {
         id: "carbs",
-        name: "carbs",
+        name: "total carbs (g)",
         unit: "grams (g)"
     }
 ]

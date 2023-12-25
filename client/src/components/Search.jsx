@@ -72,21 +72,26 @@ const Search = () => {
                     Input the amount of calories, protein (at least), and carbs as a limit per serving so we can find the most suiting meal for you!
                 </h2>
                 <form className="flex flex-col mb-12" onSubmit={(e) => handleQuery(e)}>
-                    <div className="flex flex-wrap justify-between gap-4">
+                    <div className="flex justify-between gap-4 flex-wrap">
                         {searchFilters.map((filter) => (
-                            <input type="text" key={`searchFilter-${filter.id}`}
-                                placeholder={`${filter.name} in ${filter.unit}...`} value={query[`${filter.id}`]}
-                                onChange={(e) => formChange(e.target.value, filter.id)}
-                                className="p-3 border rounded-3xl border-1
+                            <div className="flex flex-col text-center gap-4" key={`searchFilter-${filter.id}`}>
+                                <label>
+                                    {filter.name}
+                                </label>
+                                <input type="text"
+                                    placeholder={`${filter.id} in ${filter.unit}...`} value={query[`${filter.id}`]}
+                                    onChange={(e) => formChange(e.target.value, filter.id)}
+                                    className="p-3 border rounded-3xl border-1
                         hover:border-purple-500 bg-slate-100 border-slate-200
                         shadow-md"
-                            />
+                                />
+                            </div>
                         ))}
+                        <button type="submit"
+                            className="mt-8 w-32 rounded-3xl border-2 bg-blue-300 border-indigo-100 hover:border-black">
+                            Find Recipe!
+                        </button>
                     </div>
-                    <button type="submit"
-                        className="mt-8 w-32 rounded-3xl border-2 bg-blue-300 border-indigo-100 hover:border-black">
-                        Find Recipe!
-                    </button>
                 </form>
 
                 {loading && (
