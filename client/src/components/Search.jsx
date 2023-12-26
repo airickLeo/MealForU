@@ -5,6 +5,7 @@ import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import Pagination from '@mui/material/Pagination';
 import { BackToTop, returnToTop } from "./BackToTop";
+import { Link } from "react-router-dom";
 
 const Search = () => {
     // fields to enable user to search for specified categories
@@ -72,9 +73,9 @@ const Search = () => {
                     Input the amount of calories, protein (at least), and carbs as a limit per serving so we can find the most suiting meal for you!
                 </h2>
                 <form className="flex flex-col mb-12" onSubmit={(e) => handleQuery(e)}>
-                    <div className="flex justify-between gap-4 flex-wrap">
+                    <div className="flex justify-between gap-5 flex-wrap">
                         {searchFilters.map((filter) => (
-                            <div className="flex flex-col text-center gap-4" key={`searchFilter-${filter.id}`}>
+                            <div className="flex flex-col text-center gap-2" key={`searchFilter-${filter.id}`}>
                                 <label>
                                     {filter.name}
                                 </label>
@@ -103,17 +104,25 @@ const Search = () => {
                 {recipes && (
                     <div className="flex justify-evenly flex-wrap gap-6 w-full">
                         {currReicpes.map((recipe, index) => (
-                            <div className="w-[250px] text-center shadow-sm shadow-slate-400
-                        border border-gray-200 p-2 rounded-xl" key={`recipe-${index}`}>
-                                <img src={recipe.image}
-                                    alt={`recipe-${index} image`}
-                                    className="w-auto height-[100px] mb-4 rounded-2xl" />
-                                <h3>{recipe.name}</h3>
-                                <p>Total servings: {recipe.yield}</p>
-                                <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
-                                <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
-                                <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
-                            </div>
+                            <Link to={{
+                                pathname: `/search/recipe-${index}`,
+                                state: recipe
+                            }}
+                                key={`recipe-${index}`}>
+                                <div className="w-[250px] text-center shadow-sm shadow-slate-400
+                        border border-gray-200 p-2 rounded-xl" >
+                                    <img src={recipe.image}
+                                        alt={`recipe-${index} image`}
+                                        className="w-auto height-[100px] mb-4 rounded-2xl" />
+                                    <h3 className="text-cyan-500">{recipe.name}</h3>
+                                    <div className="text-gray-800 mt-4">
+                                        <p>Total servings: {recipe.yield}</p>
+                                        <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
+                                        <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
+                                        <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
+                                    </div>
+                                </div>
+                            </Link>
                         ))}
                     </div>
                 )}

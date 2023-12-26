@@ -6,10 +6,13 @@ Frontend:
 page content. Used HOC to make sure the stylings are aligned between all components (centered)
 3. Enable pagination
 4. add back to top functionality and automatically return to top when changing pages in pagination
-5.
+5. Clicking on each recipe card in /search leads to a page that contains
+step by step instructions for the recipe. It was hard to pass the recipe data through props
+to a new route
+6.
 
 ###
-
+3. search page automatically refreshes after clicking to the details page
 4. allow users to click on each card to get more info (like nutrition facts, ingredients,
 steps to cook)
 3. Allow caching, so that when the user refreshes the browser, their past search result

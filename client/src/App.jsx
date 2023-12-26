@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios from "axios";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { HomePage, Search } from './components';
+import { HomePage, RecipeDetails, Search } from './components';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
       <Routes>
         <Route path='/' Component={HomePage} />
         <Route path='/search' Component={Search} />
+        <Route path='/search/:recipeId' Component={RecipeDetails} />
       </Routes>
     </BrowserRouter>
   )
