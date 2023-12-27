@@ -6,8 +6,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Pagination from '@mui/material/Pagination';
 import { BackToTop, returnToTop } from "./BackToTop";
 import { Link } from "react-router-dom";
+import RecipeDetails from "./RecipeDetails";
 
 const Search = (props) => {
+    console.log(props.currPage)
     // fields to enable user to search for specified categories
     const [query, setQuery] = useState({
         calories: "",
@@ -120,8 +122,9 @@ const Search = (props) => {
                                 </Link>
                             ))}
                         </div>
-                        <Pagination count={Math.ceil(recipes.length / itemPerPage)} color="primary"
-                            className={`${recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} showFirstButton showLastButton page={currPage} onChange={handlePageChange} />
+                        <Pagination count={Math.ceil(props.recipes.length / itemPerPage)} color="primary"
+                            className={`${props.recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} 
+                            showFirstButton showLastButton page={props.currPage} onChange={handlePageChange} />
                     </>
                 )}
             </div>

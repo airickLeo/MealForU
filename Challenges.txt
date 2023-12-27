@@ -12,7 +12,8 @@ to a new route
 6.
 
 ###
-3. search page automatically refreshes after clicking to the details page
+3. search page automatically refreshes after clicking to the details page (hoc intercepted)
+the passing down of props. Spent 3 hrs debugging and realized the issue
 4. allow users to click on each card to get more info (like nutrition facts, ingredients,
 steps to cook)
 3. Allow caching, so that when the user refreshes the browser, their past search result
