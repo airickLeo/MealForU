@@ -1,13 +1,13 @@
 import { useLocation } from "react-router-dom";
 import { redirect } from "react-router-dom";
 
-const RecipeDetails = (props) => {
-    const location = useLocation();
-    const state = location.state;
+const RecipeDetails = () => {
+    // object destructuring to obtain the state passed
+    // through the BrowserRouter Link
+    let {state} = useLocation();
+    console.log(state);
 
-    console.log(state)
-
-    if (!recipeData) {
+    if (!state) {
         return redirect("/search");
     }
 

@@ -7,7 +7,7 @@ import Pagination from '@mui/material/Pagination';
 import { BackToTop, returnToTop } from "./BackToTop";
 import { Link } from "react-router-dom";
 
-const Search = () => {
+const Search = (props) => {
     // fields to enable user to search for specified categories
     const [query, setQuery] = useState({
         calories: "",
@@ -15,15 +15,12 @@ const Search = () => {
         carbs: ""
     });
 
-    const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(false);
     // Limit number of recipes displayed per page
     const [itemPerPage, setNumItem] = useState(12);
     // Set the starting index for recipes with respect to the "recipes" state.
     // Remember we only render "itemPerPage" number of recipes per page
     const [startIndex, setStart] = useState(0);
-    const [currPage, setPage] = useState(1);
-    const [currReicpes, setCurrRecipes] = useState([]);
 
     const formChange = (targetValue, targetKey) => {
         setQuery({
@@ -47,22 +44,22 @@ const Search = () => {
             return res.data;
         }
         const data = JSON.parse(await fetchData())
-        setRecipes(data);
+        props.setRecipes(data);
         console.log("Data received");
         setLoading(false);
         // always start loading from 0
-        setCurrRecipes(data.slice(0, itemPerPage));
+        props.setCurrRecipes(data.slice(0, itemPerPage));
         // return to page 1
-        setPage(1);
+        props.setPage(1);
     }
 
     // handles page change of the pagination
     const handlePageChange = (event, page) => {
         event.preventDefault();
-        setPage(page);
+        props.setPage(page);
         const startIndex = (page - 1) * itemPerPage;
         setStart(startIndex);
-        setCurrRecipes(recipes.slice(startIndex, page * itemPerPage));
+        props.setCurrRecipes(recipes.slice(startIndex, page * itemPerPage));
         returnToTop();
     }
 
@@ -101,34 +98,32 @@ const Search = () => {
                     </div>
                 )}
 
-                {recipes && (
-                    <div className="flex justify-evenly flex-wrap gap-6 w-full">
-                        {currReicpes.map((recipe, index) => (
-                            <Link to={{
-                                pathname: `/search/recipe-${index}`,
-                                state: recipe
-                            }}
-                                key={`recipe-${index}`}>
-                                <div className="w-[250px] text-center shadow-sm shadow-slate-400
+                {props.recipes && (
+                    <>
+                        <div className="flex justify-evenly flex-wrap gap-6 w-full">
+                            {props.currRecipes.map((recipe, index) => (
+                                <Link to={`/search/recipe-${index}`} state={recipe}
+                                    key={`recipe-${index}`}>
+                                    <div className="w-[250px] text-center shadow-sm shadow-slate-400
                         border border-gray-200 p-2 rounded-xl" >
-                                    <img src={recipe.image}
-                                        alt={`recipe-${index} image`}
-                                        className="w-auto height-[100px] mb-4 rounded-2xl" />
-                                    <h3 className="text-cyan-500">{recipe.name}</h3>
-                                    <div className="text-gray-800 mt-4">
-                                        <p>Total servings: {recipe.yield}</p>
-                                        <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
-                                        <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
-                                        <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
+                                        <img src={recipe.image}
+                                            alt={`recipe-${index} image`}
+                                            className="w-auto height-[100px] mb-4 rounded-2xl" />
+                                        <h3 className="text-cyan-500">{recipe.name}</h3>
+                                        <div className="text-gray-800 mt-4">
+                                            <p>Total servings: {recipe.yield}</p>
+                                            <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
+                                            <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
+                                            <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                        <Pagination count={Math.ceil(recipes.length / itemPerPage)} color="primary"
+                            className={`${recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} showFirstButton showLastButton page={currPage} onChange={handlePageChange} />
+                    </>
                 )}
-
-                <Pagination count={Math.ceil(recipes.length / itemPerPage)} color="primary"
-                    className={`${recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} showFirstButton showLastButton page={currPage} onChange={handlePageChange} />
             </div>
             <BackToTop />
         </>
