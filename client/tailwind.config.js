@@ -14,6 +14,10 @@ export default {
         heroContact: "900px"
       }
     },
+    fontFamily: {
+      handWrite: ['Brush Script MT', 'cursive'],
+      serif: ['Didot', 'serif']
+    }
   },
   plugins: [],
 }
