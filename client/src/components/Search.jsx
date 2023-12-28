@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import RecipeDetails from "./RecipeDetails";
 
 const Search = (props) => {
-    console.log(props.currPage)
     // fields to enable user to search for specified categories
     const [query, setQuery] = useState({
         calories: "",
@@ -61,7 +60,7 @@ const Search = (props) => {
         props.setPage(page);
         const startIndex = (page - 1) * itemPerPage;
         setStart(startIndex);
-        props.setCurrRecipes(recipes.slice(startIndex, page * itemPerPage));
+        props.setCurrRecipes(props.recipes.slice(startIndex, page * itemPerPage));
         returnToTop();
     }
 
@@ -102,29 +101,39 @@ const Search = (props) => {
 
                 {props.recipes && (
                     <>
-                        <div className="flex justify-evenly flex-wrap gap-6 w-full">
+                        <div className="flex justify-evenly flex-wrap gap-6 w-full items-stretch">
                             {props.currRecipes.map((recipe, index) => (
-                                <Link to={`/search/recipe-${index}`} state={recipe}
-                                    key={`recipe-${index}`}>
-                                    <div className="w-[250px] text-center shadow-sm shadow-slate-400
-                        border border-gray-200 p-2 rounded-xl" >
-                                        <img src={recipe.image}
-                                            alt={`recipe-${index} image`}
-                                            className="w-auto height-[100px] mb-4 rounded-2xl" />
-                                        <h3 className="text-cyan-500">{recipe.name}</h3>
-                                        <div className="text-gray-800 mt-4">
-                                            <p>Total servings: {recipe.yield}</p>
-                                            <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
-                                            <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
-                                            <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
-                                        </div>
+                                <Link
+                                    to={`/search/recipe-${index}`}
+                                    state={recipe}
+                                    key={`recipe-${index}`}
+                                    className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 p-2 rounded-xl mb-4 content-between"
+                                >
+                                    <img
+                                        src={recipe.image}
+                                        alt={`recipe-${index} image`}
+                                        className="w-full h-[160px] mb-4 object-cover rounded-2xl"
+                                    />
+                                    <h3 className="text-cyan-500">{recipe.name}</h3>
+                                    <div className="text-gray-800 mt-4">
+                                        <p>Total servings: {recipe.yield}</p>
+                                        <p>Protein per serving: {((recipe.protein) / (recipe.yield)).toFixed(2)}g</p>
+                                        <p>Carbs per serving: {((recipe.carbs) / (recipe.yield)).toFixed(2)}g</p>
+                                        <p>Calories per serving: {((recipe.calories) / (recipe.yield)).toFixed(2)}kcal</p>
                                     </div>
                                 </Link>
                             ))}
                         </div>
-                        <Pagination count={Math.ceil(props.recipes.length / itemPerPage)} color="primary"
-                            className={`${props.recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"}`} 
-                            showFirstButton showLastButton page={props.currPage} onChange={handlePageChange} />
+                        <Pagination
+                            count={Math.ceil(props.recipes.length / itemPerPage)}
+                            color="primary"
+                            className={`${props.recipes.length > 0 ? "flex justify-center mt-8 p-6 mb-8" : "hidden"
+                                }`}
+                            showFirstButton
+                            showLastButton
+                            page={props.currPage}
+                            onChange={handlePageChange}
+                        />
                     </>
                 )}
             </div>
