@@ -35,7 +35,8 @@ const RecipeDetails = () => {
 
             <div className="m-12 flex flex-col flex-1 gap-16">
                 <div className="flex gap-24">
-                    <img src={state.image} className="rounded-xl max-h-[250px] min-w-[15%] max-w-[20%]"
+                    <img src={state.image} className="rounded-xl max-h-[250px] sm:w-[25%]
+                    lg:w-[20%] xl:w-[15%]"
                         alt={`recipe-${state.name}`} />
                     <div className="flex flex-col flex-1 gap-6 justify-between">
                         <Link to={"/search"} className="font-semibold text-[16px] bg-slate-100 min-w-[200px] max-w-[30%] rounded-2xl text-center
