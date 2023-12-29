@@ -10,10 +10,15 @@ page content. Used HOC to make sure the stylings are aligned between all compone
 step by step instructions for the recipe. It was hard to pass the recipe data through props
 to a new route
 3. search page automatically refreshes after clicking to the details page (hoc intercepted)
-
-###
 4. allow users to click on each card to get more info (like nutrition facts, ingredients,
 steps to cook)
+
+###
+1. Take the cards out as a separate component to be reused in the favourites section.
+This component should also include a "add to favourite", and this favourites state
+should also be active based on what is on the "Favourites" page
+2. The favourites state needs to be lifted to a higher component (currently the favourites get
+cleared whenever I click on a new recipe)
 3. Allow caching, so that when the user refreshes the browser, their past search result
 still exists on the page
 4. Enable advanced filters (more nutrient options) in the form of a dropdown
