@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { ComponentWrapper } from "../hoc"
+import { useEffect } from "react";
+import axios from "axios"
 
 const HomePage = () => {
+    // initialize database
+    useEffect(() => {
+        const initDB = async () => {
+            await axios.get("/home");
+        }
+        initDB();
+    })
+
     return (
         <div className="flex flex-col text-center gap-8 h-screen justify-center items-center">
             <h1>

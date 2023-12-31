@@ -9,6 +9,7 @@ const RecipeDetails = () => {
     // object destructuring to obtain the state passed
     // through the BrowserRouter Link
     let { state } = useLocation();
+    console.log(state)
 
     if (!state) {
         return redirect("/search");
@@ -31,7 +32,6 @@ const RecipeDetails = () => {
                     {state.name} successfully added to favourites
                 </Alert>
             </Snackbar>
-
 
             <div className="m-12 flex flex-col flex-1 gap-16">
                 <div className="flex gap-24">
@@ -72,7 +72,7 @@ const RecipeDetails = () => {
                     </h3>
                     <ul className="space-y-2 list-disc mt-3 ml-5 font-semibold marker:text-orange-400">
                         {state.ingredients.map((item, index) => (
-                            <li className="tracking-wider">
+                            <li className="tracking-wider" key={`item${index}`}>
                                 {item.text}
                             </li>
                         ))}
@@ -82,13 +82,18 @@ const RecipeDetails = () => {
                     <h3 className="font-bold text-[30px] font-serif">
                         Recipe Instructions
                     </h3>
-                    <ul className="space-y-2 mt-3 ml-5 font-semibold list-decimal marker:text-orange-400">
-                        {state.instructions.map((item, index) => (
-                            <li className="tracking-wider">
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
+                    {state.instructions ?
+                        <ul className="space-y-2 mt-3 ml-5 font-semibold list-decimal marker:text-orange-400">
+                            {state.instructions.map((item, index) => (
+                                <li className="tracking-wider">
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                        :
+                        <em className="text-red-500">Recipe Instructions currently not available</em>
+                    }
+
                 </div>
                 <BackToTop />
             </div>

@@ -36,4 +36,5 @@ and call the API directly with this.
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
 Fixed logic in the O(n) function.
 ### 
-5. Verify search logic (carbs for the returned result is inaccurate)
+1. Add authentication, and create dynamic database management system. Allow users 
+to create their own databases and make connections (hard coded for now )

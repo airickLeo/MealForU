@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { HomePage, RecipeDetails, Search } from './components';
+import { Favourites, HomePage, RecipeDetails, Search } from './components';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -23,6 +23,7 @@ function App() {
           }
         />
         <Route path='/search/:recipeId' element={<RecipeDetails />} />
+        <Route path='/favourites' element={<Favourites />} />
       </Routes>
     </BrowserRouter>
   )
