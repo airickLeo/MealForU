@@ -16,9 +16,15 @@ router.get("/", async (req, res) => {
 
     const tableName = "recipes";
     const createTable = `CREATE TABLE IF NOT EXISTS ${tableName} (
+        id SERIAL PRIMARY KEY,
         name text,
-        ingredients text,
-        instructions text
+        ingredients JSONB[],
+        instructions JSONB[],
+        calories double precision,
+        carbs double precision,
+        protein double precision,
+        yield integer,
+        image text
     )`; 
 
     // check if table exists
