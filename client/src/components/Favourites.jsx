@@ -5,7 +5,7 @@ const Favourites = () => {
     const [favRecipes, setFav] = useState([]);
 
     useEffect(() => {
-        const data = axios.get("/api/favourites");
+        const data = axios.get("http://localhost:8000/api/favourites");
         console.log(data);
     })
 

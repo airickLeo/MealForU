@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import pg from "pg";
 
 const dbConfig = {
     host: "localhost",
@@ -13,6 +13,7 @@ const dbConfig = {
 // So, there is no need for manual acquiring
 // and releasing of client (it uses the first available client in the 
 // pool) for the query
-const pool = new Pool(dbConfig);
+const pool = new pg.Pool(dbConfig);
 
 export const query = (text, params) => pool.query(text, params);
+export { dbConfig };

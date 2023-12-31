@@ -8,10 +8,16 @@ const HomePage = () => {
     // initialize database
     useEffect(() => {
         const initDB = async () => {
-            await axios.get("/home");
-        }
+            try {
+                const response = await axios.get("http://localhost:8000/");
+                console.log(response.data); // Log the response data if needed
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
         initDB();
-    })
+    }, []); // Empty dependency array to run the effect only once when the component mounts
 
     return (
         <div className="flex flex-col text-center gap-8 h-screen justify-center items-center">
