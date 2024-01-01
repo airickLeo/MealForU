@@ -25,7 +25,7 @@ const Favourites = () => {
     }, [])
 
     return (
-        <div className="flex flex-col mt-12">
+        <div className="flex flex-col mt-12 gap-12">
             <h2>
                 Your Favourite Recipes
             </h2>

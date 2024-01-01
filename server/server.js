@@ -1,9 +1,11 @@
 import express, { raw, request } from "express";
 import cors from "cors";
 import mountRoutes from "./controllers/index.js";
+import bodyParser from "body-parser";
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 const port = 8000;
 mountRoutes(app);
 

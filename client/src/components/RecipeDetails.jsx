@@ -4,21 +4,53 @@ import { BackToTop } from "./BackToTop";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { AlertTitle } from '@mui/material';
+import axios from "axios";
 
 const RecipeDetails = () => {
     // object destructuring to obtain the state passed
     // through the BrowserRouter Link
     const location = useLocation();
     let state = location.state;
-    console.log(state.recipe);
 
     if (!state.recipe) {
         return redirect(state.parentRoute);
     }
-    
+
     const [savedFavourite, setSaveFavourite] = useState(false);
     // Tell user that the recipe has been added to the favourites
     const [notifyAdded, setNotify] = useState(false);
+
+    const handleSetFav = async () => {
+        console.log(state.recipe);
+        setSaveFavourite(!savedFavourite);
+        savedFavourite ? setNotify(false) : setNotify(true);
+
+        if (savedFavourite == false) {
+            await axios.post(
+                "http://localhost:8000/api/favourites",
+                state.recipe,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ).then(res => {
+                console.log('Success:', response.data);
+            }).catch(err => {
+                console.error('Error:', err);
+            })
+        } else {
+            await axios.delete(
+                `http://localhost:8000/api/favourites/${state.recipe.id}`
+            ).then(response => {
+                console.log('Success:', response.data);
+                // Handle success response from the server, e.g., update UI
+            }).catch(error => {
+                console.error('Error:', error);
+                // Handle error
+            });
+        }
+    }
 
     return (
         <>
@@ -43,7 +75,6 @@ const RecipeDetails = () => {
                         <Link to={`${state.parentRoute}`} className="font-semibold text-[16px] bg-slate-100 min-w-[200px] max-w-[30%] rounded-2xl text-center
                     hover:bg-slate-200">
                             <p className="p-[4%] py-[6%]">&larr; Return To Recipes</p>
-                            <p></p>
                         </Link>
                         <h2 className="text-5xl font-handWrite text-gray-600 max-w-[600px]">
                             {state.recipe.name}
@@ -54,10 +85,7 @@ const RecipeDetails = () => {
                         <div className="items-center flex">
                             <div className="bg-slate-200 px-4 py-1 flex items-center 
                         space-x-4 rounded-2xl hover:cursor-pointer hover:bg-slate-300"
-                                onClick={() => (
-                                    setSaveFavourite(!savedFavourite),
-                                    savedFavourite ? setNotify(false) : setNotify(true)
-                                )}>
+                                onClick={handleSetFav}>
                                 <p
                                     className={
                                         `text-[30px]
