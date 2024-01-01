@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Pagination } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const RecipeCard = (props) => {
     // Set the starting index for recipes with respect to the "recipes" state.
     // Remember we only render "itemPerPage" number of recipes per page
     const [startIndex, setStart] = useState(0);
+    const location = useLocation();
 
     // handles page change of the pagination
     const handlePageChange = (event, page) => {
@@ -20,10 +21,10 @@ const RecipeCard = (props) => {
     return (
         <>
             <div className="flex justify-evenly flex-wrap gap-6 w-full items-stretch">
-                {props.currRecipes.map((recipe, index) => (
+                {props.currRecipes && props.currRecipes.map((recipe, index) => (
                     <Link
-                        to={`/search/recipe-${index}`}
-                        state={recipe}
+                        to={`${location.pathname}/recipe-${index}`}
+                        state={{recipe: recipe, parentRoute: location.pathname}}
                         key={`recipe-${index}`}
                         className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 p-2 rounded-xl mb-4 content-between"
                     >

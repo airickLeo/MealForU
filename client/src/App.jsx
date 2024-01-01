@@ -13,17 +13,19 @@ function App() {
       <Routes>
         <Route path='/' element={
           <HomePage />} />
-        <Route path='/search' 
-          element={ 
+        <Route path='/search'
+          element={
             <Search setRecipes={(recipes) => setRecipes(recipes)}
-            recipes={recipes} currPage={currPage} 
-            setPage={(page) => setPage(page)}
-            currRecipes={currRecipes} 
-            setCurrRecipes={(recipes) => setCurrRecipes(recipes)} />
+              recipes={recipes} currPage={currPage}
+              setPage={(page) => setPage(page)}
+              currRecipes={currRecipes}
+              setCurrRecipes={(recipes) => setCurrRecipes(recipes)} />
           }
         />
         <Route path='/search/:recipeId' element={<RecipeDetails />} />
-        <Route path='/favourites' element={<Favourites />} />
+        <Route path='/favourites'
+          element={<Favourites />} />
+        <Route path='/favourites/:recipeId' element={<RecipeDetails />} />
       </Routes>
     </BrowserRouter>
   )

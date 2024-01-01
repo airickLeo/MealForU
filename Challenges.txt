@@ -14,6 +14,8 @@ to a new route
 steps to cook)
 
 ###
+1. Figure out the dependency to make the favourites page update whenever a new item
+is added to favourites
 1. Take the cards out as a separate component to be reused in the favourites section.
 This component should also include a "add to favourite", and this favourites state
 should also be active based on what is on the "Favourites" page
