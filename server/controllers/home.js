@@ -24,7 +24,8 @@ router.get("/", async (req, res) => {
         carbs double precision,
         protein double precision,
         yield integer,
-        image text
+        image text,
+        favourite boolean
     )`; 
 
     // check if table exists

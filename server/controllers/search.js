@@ -49,7 +49,8 @@ const obtainRecipes = async (rawData) => {
                 protein: currRecipe.totalNutrients["PROCNT"].quantity,
                 carbs: currRecipe.totalNutrients["CHOCDF"].quantity,
                 instructions: currRecipe.instructions,
-                ingredients: currRecipe.ingredients
+                ingredients: currRecipe.ingredients,
+                favourite: false
             }
             result.push(recipeObj);
 

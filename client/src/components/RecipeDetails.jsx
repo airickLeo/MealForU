@@ -16,19 +16,19 @@ const RecipeDetails = () => {
         return redirect(state.parentRoute);
     }
 
-    const [savedFavourite, setSaveFavourite] = useState(false);
+    const [savedFavourite, setSaveFavourite] = useState(state.recipe.favourite);
     // Tell user that the recipe has been added to the favourites
     const [notifyAdded, setNotify] = useState(false);
 
     const handleSetFav = async () => {
-        console.log(state.recipe);
         setSaveFavourite(!savedFavourite);
         savedFavourite ? setNotify(false) : setNotify(true);
 
         if (savedFavourite == false) {
+            console.log({...state.recipe, favourite: true});
             await axios.post(
                 "http://localhost:8000/api/favourites",
-                state.recipe,
+                {...state.recipe, favourite: true},
                 {
                     headers: {
                         'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ const RecipeDetails = () => {
                                         `text-[30px]
                                     ${savedFavourite ? "text-red-600" : "text-black"}`
                                     }>&#9825;</p>
-                                <p>Save To Favourites</p>
+                                <p>{savedFavourite ? "Remove From Favourites" : "Save to Favourites"}</p>
                             </div>
                         </div>
                     </div>

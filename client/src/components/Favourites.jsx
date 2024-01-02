@@ -26,7 +26,7 @@ const Favourites = () => {
 
     return (
         <div className="flex flex-col mt-12 gap-12">
-            <h2>
+            <h2 className="text-center">
                 Your Favourite Recipes
             </h2>
             {favRecipes && (
