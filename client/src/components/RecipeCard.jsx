@@ -20,13 +20,13 @@ const RecipeCard = (props) => {
 
     return (
         <>
-            <div className="flex justify-evenly flex-wrap gap-6 w-full items-stretch">
+            <div className="flex justify-evenly flex-wrap gap-6 w-full items-stretch text-[17px]">
                 {props.currRecipes && props.currRecipes.map((recipe, index) => (
                     <Link
                         to={`${location.pathname}/recipe-${index}`}
                         state={{recipe: recipe, parentRoute: location.pathname}}
                         key={`recipe-${index}`}
-                        className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 p-2 rounded-xl mb-4 content-between"
+                        className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 rounded-xl mb-4 content-between p-4"
                     >
                         <img
                             src={recipe.image}

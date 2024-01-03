@@ -26,8 +26,11 @@ const Favourites = () => {
 
     return (
         <div className="flex flex-col mt-12 gap-12">
-            <h2 className="text-center">
-                Your Favourite Recipes
+            <h2 className="text-center gap-4 flex flex-col">
+                <p className="font-semibold">Your Favourite Recipes</p>
+                <p>
+                    (<span className="font-bold text-red-400">{favRecipes.length}</span> Recipes Bookmarked)
+                </p>
             </h2>
             {favRecipes && (
                 <RecipeCard

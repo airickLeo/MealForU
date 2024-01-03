@@ -14,13 +14,7 @@ to a new route
 steps to cook)
 
 ###
-1. Figure out the dependency to make the favourites page update whenever a new item
-is added to favourites
-1. Take the cards out as a separate component to be reused in the favourites section.
-This component should also include a "add to favourite", and this favourites state
-should also be active based on what is on the "Favourites" page
-2. The favourites state needs to be lifted to a higher component (currently the favourites get
-cleared whenever I click on a new recipe)
+1. Allow users to search for recipes on the current page
 3. Allow caching, so that when the user refreshes the browser, their past search result
 still exists on the page
 4. Enable advanced filters (more nutrient options) in the form of a dropdown
@@ -38,6 +32,8 @@ and call the API directly with this.
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
 Fixed logic in the O(n) function.
 ### 
-1. Creating database if it does not already exist upon entering homepage
+1. When pushing new recipes to database, make sure to use URL.createObjectURL(selectedImage) to
+keep track of the image url for recipe image
+1. Allow users to edit recipes
 1. Add authentication, and create dynamic database management system. Allow users 
 to create their own databases and make connections (hard coded for now )

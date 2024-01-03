@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Favourites, HomePage, RecipeDetails, Search } from './components';
+import { AddRecipe, Favourites, HomePage, RecipeDetails, Search } from './components';
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -26,6 +26,7 @@ function App() {
         <Route path='/favourites'
           element={<Favourites />} />
         <Route path='/favourites/:recipeId' element={<RecipeDetails />} />
+        <Route path='/add' element={<AddRecipe />} />
       </Routes>
     </BrowserRouter>
   )
