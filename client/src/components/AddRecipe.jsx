@@ -11,8 +11,8 @@ const AddRecipe = () => {
         protein: "",
         yield: "",
         image: "",
-        ingredients: "",
-        instructions: ""
+        ingredients: [{ text: "" }],
+        instructions: [""]
     })
 
     // Handle form changes such as text and number inputs
@@ -35,38 +35,90 @@ const AddRecipe = () => {
 
     return (
         <div className="mt-12 font-serif w-full">
-            <h2 className="font-semibold text-red-700">Add your very own recipe below!</h2>
-            <div className="flex flex-col lg:flex-row flex-1">
-                <div className="flex flex-col w-full">
-                    <form className="flex flex-col flex-1 mt-8 w-full">
+            <h2 className="font-semibold text-red-700 lg:text-center">Add your very own recipe below!</h2>
+            <form className="flex flex-col flex-1 mt-8 w-full" onSubmit={submitRecipe}>
+                <div className="flex flex-col lg:flex-row w-full">
+                    <div className="flex flex-col w-[400px] mt-1">
                         {recipeFields.map((field, index) => (
                             <div key={`addRecipe-field${index}`} className="flex flex-col gap-2 mb-6">
                                 <label htmlFor={`recipe-field-${index}`}><b>{field.labelName}</b></label>
                                 <input placeholder={`${field.placeHolderName}`} type={`${field.inputType}`} id={`recipe-field-${index}`} value={recipeDetails[field.dbFieldName]}
-                                onChange={(e) => handleBasicFormChange(field.dbFieldName, e)}
+                                    onChange={(e) => handleBasicFormChange(field.dbFieldName, e)}
                                     className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px]" />
                             </div>
                         ))}
-                        <div className="flex flex-col gap-2 mb-6">
+                        <div className="flex flex-col gap-2 mb-12">
                             <label htmlFor={`recipe-field-image`}><b>Recipe Image</b></label>
                             <input id={`recipe-field-image`} type="file" accept="image/*"
-                                className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px] flex justify-end" 
+                                className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px] flex justify-end"
                                 onChange={(e) => handleImageChange(e)}
-                                />
+                            />
                         </div>
-                        <div className="flex justify-start mt-3">
-                            <button type="submit" className="py-2 px-4 max-w-[200px] outline outline-2 outline-blue-400 hover:outline-none">
-                                Add To Favourites!
-                            </button>
-                        </div>
-                    </form>
+                    </div>
+                    <div className="flex flex-col gap-3 mb-6 lg:ml-16 w-full">
+                        <label htmlFor={`recipe-field-ingredients`}><b>Ingredients</b></label>
+                        {recipeDetails.ingredients.map((ingredientObj, index) => (
+                            <input id={`recipe-field-ingredient-${index}`} type="text" autoComplete="off"
+                                className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px] flex justify-end"
+                                onChange={
+                                    (e) => (setDetails({
+                                        ...recipeDetails,
+                                        ingredients: recipeDetails.ingredients.map((ingredient, i) => (
+                                            i == index ? {...ingredient, text: e.target.value} : ingredient
+                                        ))
+                                    }))
+                                }
+                                key={`ingredient-${index}`}
+                                placeholder={`Enter Ingredient ${index + 1}`}
+                            />
+                        ))}
+                        <button className="bg-slate-300 hover:bg-slate-200 max-w-[400px] font-semibold"
+                            onClick={() =>
+                                setDetails({
+                                    ...recipeDetails,
+                                    ingredients: [...recipeDetails.ingredients, { text: "" }]
+                                })}
+                            type="button"
+                        >
+                            &#43; Add More Ingredients
+                        </button>
+                    </div>
+                    <div className="flex flex-col gap-3 mb-6 lg:ml-16 w-full">
+                        <label htmlFor={`recipe-field-instructions`}><b>Recipe Instructions</b></label>
+                        {recipeDetails.instructions.map((instruction, index) => (
+                            <input id={`recipe-field-instruction-${index}`} type="text" autoComplete="off"
+                                className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px] flex justify-end"
+                                onChange={
+                                    (e) => (setDetails({
+                                        ...recipeDetails,
+                                        instructions: recipeDetails.instructions.map((instruction, i) => (
+                                            i == index ? e.target.value : instruction
+                                        ))
+                                    }))
+                                }
+                                key={`instruction-${index}`}
+                                placeholder={`Enter instruction ${index + 1}`}
+                            />
+                        ))}
+                        <button className="bg-slate-300 hover:bg-slate-200 max-w-[400px] font-semibold"
+                            onClick={() =>
+                                setDetails({
+                                    ...recipeDetails,
+                                    instructions: [...recipeDetails.instructions, ""]
+                                })}
+                            type="button"
+                        >
+                            &#43; Add More Instructions
+                        </button>
+                    </div>
                 </div>
-                <div>
-
+                <div className="flex justify-start my-3 lg:justify-center">
+                    <button type="submit" className="py-2 px-4 max-w-[200px] outline outline-3 outline-blue-400 hover:outline-none font-bold">
+                        Add To Favourites!
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
-
     )
 }
 

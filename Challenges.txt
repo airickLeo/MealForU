@@ -14,6 +14,7 @@ to a new route
 steps to cook)
 
 ###
+1. Add submit logic and backend logic for submit.
 1. Allow users to search for recipes on the current page
 3. Allow caching, so that when the user refreshes the browser, their past search result
 still exists on the page
@@ -32,6 +33,8 @@ and call the API directly with this.
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
 Fixed logic in the O(n) function.
 ### 
+1. If in the frontend, the added recipe has missing values, make sure to set default value before
+querying database
 1. When pushing new recipes to database, make sure to use URL.createObjectURL(selectedImage) to
 keep track of the image url for recipe image
 1. Allow users to edit recipes
