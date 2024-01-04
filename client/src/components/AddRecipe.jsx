@@ -1,6 +1,8 @@
 import { ComponentWrapper } from "../hoc";
 import { recipeFields } from "../constants";
 import { useState } from "react";
+import axios from "axios";
+import { Snackbar, Alert } from "@mui/material";
 
 const AddRecipe = () => {
     // The state will have identical field names as the database column names
@@ -14,6 +16,8 @@ const AddRecipe = () => {
         ingredients: [{ text: "" }],
         instructions: [""]
     })
+
+    const [addedToFav, setAdded] = useState(false);
 
     // Handle form changes such as text and number inputs
     const handleBasicFormChange = (field, e) => {
@@ -30,21 +34,68 @@ const AddRecipe = () => {
         })
     }
 
-    const submitRecipe = () => {
+    const submitRecipe = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+
+        for (const [key, value] of Object.entries(recipeDetails)) {
+            formData.append(key, value);
+        }
+
+        // Display the key/value pairs
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+
+        await axios.post("http://localhost:8000/api/add",
+            formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            setAdded(true);
+            console.log("Manual Recipe Successfully Added To Favourites");
+            // Reset state
+            setDetails({
+                name: "",
+                calories: "",
+                carbs: "",
+                protein: "",
+                yield: "",
+                image: "",
+                ingredients: [{ text: "" }],
+                instructions: [""]
+            });
+        }).catch(err => {
+            console.error("Unable to add manual recipe to favourites ", err);
+        })
     }
 
     return (
         <div className="mt-12 font-serif w-full">
+            <Snackbar
+                open={addedToFav}
+                onClose={() => { setAdded(false) }}
+                autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}  // Specify the anchor origin
+                className="absolute top-0 w-[80%]"
+            >
+                <Alert>
+                    Recipe successfully added to favourites
+                </Alert>
+            </Snackbar>
             <h2 className="font-semibold text-red-700 lg:text-center">Add your very own recipe below!</h2>
-            <form className="flex flex-col flex-1 mt-8 w-full" onSubmit={submitRecipe}>
+            <form className="flex flex-col flex-1 mt-8 w-full" onSubmit={(e) => submitRecipe(e)} id="addRecipeForm">
                 <div className="flex flex-col lg:flex-row w-full">
                     <div className="flex flex-col w-[400px] mt-1">
                         {recipeFields.map((field, index) => (
                             <div key={`addRecipe-field${index}`} className="flex flex-col gap-2 mb-6">
-                                <label htmlFor={`recipe-field-${index}`}><b>{field.labelName}</b></label>
+                                <label htmlFor={`recipe-field-${index}`}><b>{field.labelName}</b><span className="text-red-700">&nbsp; *</span></label>
                                 <input placeholder={`${field.placeHolderName}`} type={`${field.inputType}`} id={`recipe-field-${index}`} value={recipeDetails[field.dbFieldName]}
                                     onChange={(e) => handleBasicFormChange(field.dbFieldName, e)}
-                                    className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px]" />
+                                    className="py-2 pl-3 outline rounded-xl outline-2 outline-slate-400 shadow-lg hover:outline-[3px] hover:outline-slate-500 max-w-[400px]"
+                                    required
+                                />
                             </div>
                         ))}
                         <div className="flex flex-col gap-2 mb-12">
@@ -64,7 +115,7 @@ const AddRecipe = () => {
                                     (e) => (setDetails({
                                         ...recipeDetails,
                                         ingredients: recipeDetails.ingredients.map((ingredient, i) => (
-                                            i == index ? {...ingredient, text: e.target.value} : ingredient
+                                            i == index ? { ...ingredient, text: e.target.value } : ingredient
                                         ))
                                     }))
                                 }

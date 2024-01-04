@@ -1,6 +1,10 @@
 import express from "express";
 const router = express.Router();
 import { query, dbConfig } from "../db/index.js";
+import multer from "multer";
+
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 // Home page route (initialize database if it doesn't exist)
 router.get('/favourites', async (req, res) => {
@@ -12,10 +16,10 @@ router.get('/favourites', async (req, res) => {
 // Post new recipe as favourites to the database
 router.post('/favourites', async (req, res) => {
     const recipeData = req.body;
-    const addRecipeQuery = "INSERT INTO recipes(name, ingredients, instructions, calories, carbs, protein, yield, image, favourite)" +  
-    " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+    const addRecipeQuery = "INSERT INTO recipes(name, ingredients, instructions, calories, carbs, protein, yield, image, favourite)" +
+        " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
     await query(addRecipeQuery, [
-        recipeData.name, 
+        recipeData.name,
         recipeData.ingredients,
         recipeData.instructions || [],
         recipeData.calories,
@@ -41,6 +45,33 @@ router.delete('/favourites/:id', async (req, res) => {
     }).catch(err => {
         console.error(`Recipe ${recipeId} failed to be deleted: ${err}`);
     })
+})
+
+// "Add Your Recipe" route
+router.post("/add", upload.single('image'), async (req, res) => {
+    try {
+        console.log("Request to manually add recipe received");
+        // Note that name, calories, carbs, protein, and yield were all required fields
+        const recipeDetails = req.body;
+        console.log(recipeDetails);
+
+        console.log(req.file);
+
+        // // data cleaning (remove empty instructions or ingredients)
+        // const cleanedIngredients = recipeDetails.ingredients.map((ingredient, index) => (
+        //     ingredient.text == "" ? null : ingredient
+        // )).filter((ingredient) => ingredient != null);
+
+        // const cleanedInstructions = recipeDetails.instructions.filter((instruction) => (
+        //     instruction.length != 0
+        // ));
+
+        // recipeDetails.instructions = cleanedInstructions;
+        // recipeDetails.ingredients = cleanedIngredients;
+    } catch (err) {
+        console.error("Could not manually add recipe", err);
+    }
+
 })
 
 export default router;

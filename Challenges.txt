@@ -32,6 +32,8 @@ and call the API directly with this.
 4. The api might not return all 100 results each time (based on the query), as some 
 returns less than 20 or even 0 results. Needed to add methods to avoid returning error from this.
 Fixed logic in the O(n) function.
+5. Multer file upload issues fixed using: https://www.youtube.com/watch?v=9LX3JocVO00. Must use 
+the exact formData key name for upload.single(<key>)
 ### 
 1. If in the frontend, the added recipe has missing values, make sure to set default value before
 querying database
