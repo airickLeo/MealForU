@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Pagination } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { returnToTop } from "./BackToTop";
 
 const RecipeCard = (props) => {
     // Set the starting index for recipes with respect to the "recipes" state.
@@ -24,7 +25,7 @@ const RecipeCard = (props) => {
                 {props.currRecipes && props.currRecipes.map((recipe, index) => (
                     <Link
                         to={`${location.pathname}/recipe-${index}`}
-                        state={{recipe: recipe, parentRoute: location.pathname}}
+                        state={{ recipe: recipe, parentRoute: location.pathname }}
                         key={`recipe-${index}`}
                         className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 rounded-xl mb-4 content-between p-4"
                     >

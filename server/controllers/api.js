@@ -4,7 +4,7 @@ import { query, dbConfig } from "../db/index.js";
 import multer from "multer";
 
 const storage = multer.memoryStorage();
-const upload = multer({storage: storage});
+const upload = multer({ storage: storage });
 
 // Home page route (initialize database if it doesn't exist)
 router.get('/favourites', async (req, res) => {
@@ -53,21 +53,41 @@ router.post("/add", upload.single('image'), async (req, res) => {
         console.log("Request to manually add recipe received");
         // Note that name, calories, carbs, protein, and yield were all required fields
         const recipeDetails = req.body;
-        console.log(recipeDetails);
 
-        console.log(req.file);
+        // data cleaning (remove empty instructions or ingredients) and conver each
+        // json string back to JSON object
+        const cleanedIngredients = recipeDetails.ingredients.map(
+            jsonStr => JSON.parse(jsonStr)).map((ingredient, index) => (
+                ingredient.text == "" ? null : ingredient
+            )).filter((ingredient) => ingredient != null);
 
-        // // data cleaning (remove empty instructions or ingredients)
-        // const cleanedIngredients = recipeDetails.ingredients.map((ingredient, index) => (
-        //     ingredient.text == "" ? null : ingredient
-        // )).filter((ingredient) => ingredient != null);
+        const cleanedInstructions = recipeDetails.instructions.filter((instruction) => (
+            instruction.length != 0
+        ));
 
-        // const cleanedInstructions = recipeDetails.instructions.filter((instruction) => (
-        //     instruction.length != 0
-        // ));
+        recipeDetails.instructions = cleanedInstructions;
+        recipeDetails.ingredients = cleanedIngredients;
+        recipeDetails.imageBuffer = req.file.buffer;
 
-        // recipeDetails.instructions = cleanedInstructions;
-        // recipeDetails.ingredients = cleanedIngredients;
+        const addRecipeQuery = "INSERT INTO recipes(name, ingredients, instructions, calories, carbs, protein, yield, imageBuffer, favourite)" +
+        " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+        await query(addRecipeQuery, [
+            recipeDetails.name,
+            recipeDetails.ingredients,
+            recipeDetails.instructions || [],
+            recipeDetails.calories,
+            recipeDetails.carbs,
+            recipeDetails.protein,
+            recipeDetails.yield,
+            recipeDetails.imageBuffer,
+            true
+        ]).then(res => {
+            console.log("Recipe Manually Added To Favourites");
+        }).catch(err => {
+            console.log("Failed to manually add recipe to favourites", err);
+        })
+
+        res.status(200).json({message: "Recipe Manually Added"});
     } catch (err) {
         console.error("Could not manually add recipe", err);
     }

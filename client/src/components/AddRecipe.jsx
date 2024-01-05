@@ -38,8 +38,22 @@ const AddRecipe = () => {
         e.preventDefault();
         const formData = new FormData();
 
+        // append all to formData besides array datastructures
         for (const [key, value] of Object.entries(recipeDetails)) {
-            formData.append(key, value);
+            if (key != "instructions" && key != "ingredients") {
+                formData.append(key, value);
+            }
+        }
+
+        // Append instructions and ingredients separately
+        for (const value of recipeDetails.instructions) {
+            formData.append('instructions', value);
+        }
+        
+        // Serialize objects to JSON string so they can be handled
+        // by multer
+        for (const ingredientObj of recipeDetails.ingredients) {
+            formData.append("ingredients", JSON.stringify(ingredientObj));
         }
 
         // Display the key/value pairs

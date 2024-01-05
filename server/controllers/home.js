@@ -19,12 +19,13 @@ router.get("/", async (req, res) => {
         id SERIAL PRIMARY KEY,
         name text,
         ingredients JSONB[],
-        instructions JSONB[],
+        instructions text[],
         calories double precision,
         carbs double precision,
         protein double precision,
         yield integer,
         image text,
+        imageBuffer BYTEA,
         favourite boolean
     )`; 
 

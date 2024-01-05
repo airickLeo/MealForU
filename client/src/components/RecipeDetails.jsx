@@ -25,7 +25,6 @@ const RecipeDetails = () => {
         savedFavourite ? setNotify(false) : setNotify(true);
 
         if (savedFavourite == false) {
-            console.log({...state.recipe, favourite: true});
             await axios.post(
                 "http://localhost:8000/api/favourites",
                 {...state.recipe, favourite: true},
