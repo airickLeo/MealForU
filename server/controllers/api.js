@@ -9,8 +9,16 @@ const upload = multer({ storage: storage });
 // Home page route (initialize database if it doesn't exist)
 router.get('/favourites', async (req, res) => {
     const allFavourites = `SELECT * FROM recipes`;
-    const result = await query(allFavourites);
-    res.status(200).json(result.rows)
+    let result = await query(allFavourites);
+
+    // Ensure that the image is converted from the byte form back to an image (base 64 string)
+    result = result.rows.map((entry, index) => (
+        {
+            ...entry,
+            imagebuffer: entry.imagebuffer ? entry.imagebuffer.toString('base64') : ""
+        }
+    ))
+    res.status(200).json(result)
 })
 
 // Post new recipe as favourites to the database
@@ -76,7 +84,7 @@ router.post("/add", upload.single('image'), async (req, res) => {
         recipeDetails.imageBuffer = req.file ? req.file.buffer : null;
 
         const addRecipeQuery = "INSERT INTO recipes(name, ingredients, instructions, calories, carbs, protein, yield, imageBuffer, favourite)" +
-        " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+            " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
         await query(addRecipeQuery, [
             recipeDetails.name,
             recipeDetails.ingredients,
@@ -93,7 +101,7 @@ router.post("/add", upload.single('image'), async (req, res) => {
             console.log("Failed to manually add recipe to favourites", err);
         })
 
-        res.status(200).json({message: "Recipe Manually Added"});
+        res.status(200).json({ message: "Recipe Manually Added" });
     } catch (err) {
         console.error("Could not manually add recipe", err);
     }

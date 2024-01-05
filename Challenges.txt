@@ -34,11 +34,12 @@ returns less than 20 or even 0 results. Needed to add methods to avoid returning
 Fixed logic in the O(n) function.
 5. Multer file upload issues fixed using: https://www.youtube.com/watch?v=9LX3JocVO00. Must use 
 the exact formData key name for upload.single(<key>)
+6. Storing uploaded recipe images in postgresql and rendering them in the frontend (
+https://www.youtube.com/watch?v=_Xwf-Q3F-Gs
+)
 ### 
-1. If in the frontend, the added recipe has missing values, make sure to set default value before
-querying database
-1. When pushing new recipes to database, make sure to use URL.createObjectURL(selectedImage) to
-keep track of the image url for recipe image
+
+
 1. Allow users to edit recipes
 1. Add authentication, and create dynamic database management system. Allow users 
 to create their own databases and make connections (hard coded for now )

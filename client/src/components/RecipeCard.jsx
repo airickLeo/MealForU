@@ -29,11 +29,19 @@ const RecipeCard = (props) => {
                         key={`recipe-${index}`}
                         className="flex flex-col w-full sm:w-[250px] text-center shadow-sm border border-gray-200 rounded-xl mb-4 content-between p-4"
                     >
-                        <img
-                            src={recipe.image}
-                            alt={`recipe-${index} image`}
-                            className="w-full h-[160px] mb-4 object-cover rounded-2xl"
-                        />
+                        {recipe.image ?
+                            <img
+                                src={recipe.image}
+                                alt={`recipe-${index} image`}
+                                className="w-full h-[160px] mb-4 object-cover rounded-2xl"
+                            />
+                            :
+                            <img
+                                src={`data:image/png;base64,${recipe.imagebuffer}`}
+                                className="w-full h-[160px] mb-4 object-cover rounded-2xl"
+                                alt={`recipe-${index} image`} />
+                        }
+
                         <h3 className="text-cyan-500">{recipe.name}</h3>
                         <div className="text-gray-800 mt-4">
                             <p>Total servings: {recipe.yield}</p>
