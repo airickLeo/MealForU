@@ -35,6 +35,8 @@ Fixed logic in the O(n) function.
 5. Multer file upload issues fixed using: https://www.youtube.com/watch?v=9LX3JocVO00. Must use 
 the exact formData key name for upload.single(<key>)
 6. Storing uploaded recipe images in postgresql and rendering them in the frontend (
+Saving image buffer as blob or bytea in postgres, and converting back to
+base64 string when rendering the image in react
 https://www.youtube.com/watch?v=_Xwf-Q3F-Gs
 )
 ### 
