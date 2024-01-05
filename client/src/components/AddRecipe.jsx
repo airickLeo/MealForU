@@ -56,11 +56,6 @@ const AddRecipe = () => {
             formData.append("ingredients", JSON.stringify(ingredientObj));
         }
 
-        // Display the key/value pairs
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
         await axios.post("http://localhost:8000/api/add",
             formData, {
             headers: {
@@ -135,6 +130,7 @@ const AddRecipe = () => {
                                 }
                                 key={`ingredient-${index}`}
                                 placeholder={`Enter Ingredient ${index + 1}`}
+                                value={ingredientObj.text}
                             />
                         ))}
                         <button className="bg-slate-300 hover:bg-slate-200 max-w-[400px] font-semibold"
@@ -163,6 +159,7 @@ const AddRecipe = () => {
                                 }
                                 key={`instruction-${index}`}
                                 placeholder={`Enter instruction ${index + 1}`}
+                                value={instruction}
                             />
                         ))}
                         <button className="bg-slate-300 hover:bg-slate-200 max-w-[400px] font-semibold"

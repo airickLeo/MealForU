@@ -54,6 +54,12 @@ router.post("/add", upload.single('image'), async (req, res) => {
         // Note that name, calories, carbs, protein, and yield were all required fields
         const recipeDetails = req.body;
 
+        recipeDetails.ingredients = (typeof recipeDetails.ingredients) != "object" ? [recipeDetails.ingredients] : recipeDetails.ingredients;
+
+        recipeDetails.instructions = (typeof recipeDetails.instructions) != "object" ? [recipeDetails.instructions] : recipeDetails.instructions;
+
+        console.log(recipeDetails);
+
         // data cleaning (remove empty instructions or ingredients) and conver each
         // json string back to JSON object
         const cleanedIngredients = recipeDetails.ingredients.map(
@@ -67,7 +73,7 @@ router.post("/add", upload.single('image'), async (req, res) => {
 
         recipeDetails.instructions = cleanedInstructions;
         recipeDetails.ingredients = cleanedIngredients;
-        recipeDetails.imageBuffer = req.file.buffer;
+        recipeDetails.imageBuffer = req.file ? req.file.buffer : null;
 
         const addRecipeQuery = "INSERT INTO recipes(name, ingredients, instructions, calories, carbs, protein, yield, imageBuffer, favourite)" +
         " VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)";
