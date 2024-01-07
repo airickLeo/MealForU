@@ -49,13 +49,17 @@ const Search = (props) => {
 
         try {
             const data = JSON.parse(await fetchData());
-            props.setRecipes(data);
             console.log("Data received");
             setLoading(false);
-            // always start loading from 0
-            props.setCurrRecipes(data.slice(0, itemPerPage));
-            // return to page 1
-            props.setPage(1);
+            if (data.length == 0) {
+                alert("No recipes matched the inputted requirements!")
+            } else {
+                props.setRecipes(data);
+                // always start loading from 0
+                props.setCurrRecipes(data.slice(0, itemPerPage));
+                // return to page 1
+                props.setPage(1);
+            }
         } catch (error) {
             setLoading(false);
             // Handle specific errors or show a general error message to the user
@@ -74,7 +78,7 @@ const Search = (props) => {
         <>
             <div className="w-full flex flex-col mt-12">
                 <h2 className="mb-[5%]">
-                    Input the amount of calories, protein (at least), and carbs as a limit per serving so we can find the most suiting meal for you!
+                    Input the max amount of calories, minimum amount of protein, and max amount of carbs as a limit per serving so we can find the most suiting meal for you!
                 </h2>
                 <form className="flex flex-col mb-12" onSubmit={(e) => handleQuery(e)}>
                     <div className="flex justify-between gap-5 flex-wrap">
