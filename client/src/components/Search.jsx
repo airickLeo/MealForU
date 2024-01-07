@@ -31,23 +31,44 @@ const Search = (props) => {
     const handleQuery = async (e) => {
         e.preventDefault();
         setLoading(true);
+
         const fetchData = async () => {
-            const res = await axios.get("http://localhost:8000/search", {
-                params: {
-                    ...query
-                }
+            try {
+                const res = await axios.get("http://localhost:8000/search", {
+                    params: {
+                        ...query
+                    }
+                });
+                return res.data;
+            } catch (error) {
+                // Handle the error here
+                console.error("Error fetching data:", error);
+                throw error; // Rethrow the error to propagate it to the next catch block
+            }
+        };
+
+        try {
+            const data = JSON.parse(await fetchData());
+            props.setRecipes(data);
+            console.log("Data received");
+            setLoading(false);
+            // always start loading from 0
+            props.setCurrRecipes(data.slice(0, itemPerPage));
+            // return to page 1
+            props.setPage(1);
+        } catch (error) {
+            setLoading(false);
+            // Handle specific errors or show a general error message to the user
+            alert(error.response.data.message);
+            // You can set an error state or show an error message to the user
+            setQuery({
+                calories: "",
+                protein: "",
+                carbs: ""
             });
-            return res.data;
         }
-        const data = JSON.parse(await fetchData())
-        props.setRecipes(data);
-        console.log("Data received");
-        setLoading(false);
-        // always start loading from 0
-        props.setCurrRecipes(data.slice(0, itemPerPage));
-        // return to page 1
-        props.setPage(1);
-    }
+    };
+
 
     return (
         <>
@@ -84,7 +105,7 @@ const Search = (props) => {
                     </div>
                 )}
 
-                {props.recipes && (<RecipeCard {...props} itemPerPage={itemPerPage}/>)}
+                {props.recipes && (<RecipeCard {...props} itemPerPage={itemPerPage} />)}
             </div>
             <BackToTop />
         </>

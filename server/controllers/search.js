@@ -34,6 +34,7 @@ const obtainRecipes = async (rawData) => {
         }
 
         // target to obtain all 100 recipes from API query
+        // O(n) Algorithm
         for (let i = 0; i < targetCount; i += 1) {
             // obtain the current (i %  pageCount)th recipe on the current page
             currRecipe = rawData.hits[i % pageCount].recipe;
@@ -78,6 +79,15 @@ router.get("/", async (req, res) => {
     try {
         // obtain the query filters
         const queryFilters = req.query;
+
+        // Input validation (only numbers and all numbers must be >= 0)
+        for (const [paramKey, paramVal] of Object.entries(queryFilters)) {
+            const result = parseFloat(paramVal);
+            if (paramVal != "" && (isNaN(result) || result < 0)) {
+                throw `Invalid request parameter ${paramKey} with value ${paramVal}`;
+            }
+        }
+
         let calories = queryFilters.calories || "0+";
         // for protein, we want more than the queryFilters.protein
         let protein = (queryFilters.protein || "0") + "+";
@@ -103,7 +113,7 @@ router.get("/", async (req, res) => {
         res.json(JSON.stringify(recipeList)).status(200);
     } catch (err) {
         console.error(err);
-        res.status(404).json({ message: "Error, could not obtain the recipes desired" });
+        res.status(404).json({ message: err });
     }
 })
 

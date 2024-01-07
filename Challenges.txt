@@ -39,9 +39,9 @@ Saving image buffer as blob or bytea in postgres, and converting back to
 base64 string when rendering the image in react
 https://www.youtube.com/watch?v=_Xwf-Q3F-Gs
 )
+7. Added controllers to improve modularization
 ### 
-
-
-1. Allow users to edit recipes
+1. add backend input verification for search (no negatives)
+1. Allow users to edit recipes (CRUD, Update criteria of the CRUD)
 1. Add authentication, and create dynamic database management system. Allow users 
 to create their own databases and make connections (hard coded for now )
