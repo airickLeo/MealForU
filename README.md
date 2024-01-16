@@ -1,5 +1,9 @@
 # **<p align="center" text="bold">A fullstack app dedicated to find the meal fitting your needs</p>**
 
+## About The Project
+![image](https://github.com/airickLeo/MealForU/assets/88010729/4c681500-960a-4da2-bdc4-7cec78e7265a)
+
+
 ## How to set up on local machine:
 1. cd to client and run npm i
 2. cd to server and run npm i
