@@ -9,6 +9,11 @@ obtain the perfect recipes fitting their needs
 <br>
 <br>
 
+Click on the cards to obtain detailed instructions!
+<br>
+![image](https://github.com/airickLeo/MealForU/assets/88010729/5bafb9e5-f599-4254-ba11-94941d86b600)
+<br><br>
+
 The application will prompt when a search cannot be obtained:
 <br>
 <br>
