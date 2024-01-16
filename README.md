@@ -11,7 +11,6 @@
 
 ### The application will prompt when a search cannot be obtained:
 <br>
-<br>
 ![image](https://github.com/airickLeo/MealForU/assets/88010729/8c307b3d-a5b9-44c1-bff6-ad14d0ea734c)
 <br>
 <br>
