@@ -1,6 +1,6 @@
-**<p align="center" text="bold">A fullstack app dedicated to find the meal fitting your needs</p>**
+#**<p align="center" text="bold">A fullstack app dedicated to find the meal fitting your needs</p>**
 
-# How to set up on local machine:
+## How to set up on local machine:
 1. cd to client and run npm i
 2. cd to server and run npm i
 3. Download PostgreSQL from https://www.postgresql.org/download/
