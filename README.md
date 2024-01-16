@@ -1,4 +1,4 @@
-A fullstack app dedicated to find the meal fitting your needs
+<p align="center">A fullstack app dedicated to find the meal fitting your needs</p>
 
 # How to set up on local machine:
 1. cd to client and run npm i
